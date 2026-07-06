@@ -5,16 +5,16 @@
 :root {
   --bg: #116087;
   --panel: #191414;
-  --muted: #bdb6b6;
-  --accent: #f3c400;
+  --muted: #BDB6B6;
+  --accent: #F3C400;
   --card: #151213;
-  --soft: #1e1a1a;
+  --soft: #1E1A1A;
   --radius: 14px;
 }
 
 * {
   transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-   font-family: "Urbanist" !important;
+  font-family: "Urbanist", sans-serif;
 }
 
 .Primary-bg {
