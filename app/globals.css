@@ -1,26 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #116087;
+  --panel: #191414;
+  --muted: #bdb6b6;
+  --accent: #f3c400;
+  --card: #151213;
+  --soft: #1e1a1a;
+  --radius: 14px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+   font-family: "Urbanist" !important;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.Primary-bg {
+  background-color: var(--bg) !important;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+
+
+.urbanfont {
+  font-family: serif !important;
 }
