@@ -8,7 +8,7 @@ export default function HomePage() {
   const [distance] = useState(0);
 
   return (
-     <section className="relative flex min-h-[700px] items-center justify-center bg-[url('https://mymovingjourney.com/assets/img/final_banner.jpg')] bg-contain bg-center bg-no-repeat md:bg-repeat">
+    <section className="relative flex min-h-[700px] items-center justify-center bg-[url('https://mymovingjourney.com/assets/img/final_banner.jpg')] bg-contain bg-center bg-no-repeat md:bg-repeat">
       <div className="absolute inset-0 bg-[rgba(112,157,216,0.15)]"></div>
 
       {/* Hero Content */}
@@ -87,9 +87,69 @@ export default function HomePage() {
 
       </div>
 
+{/* 
+      <div className='mt-12 flex flex-col items-center'>
+        <h3 className='urbanfont lg:text-5xl font-bold text-2xl text-center'>Find Trusted Moving Companies Near You</h3>
+        <div className="  max-w-7xl mx-auto p-5  flex flex-col lg:flex-row justify-between gap-6 ">
+         
+          <div className="flex-1 bg-[#F8FAFB] rounded-[16px] border-[#11608729] p-6">
+            <div className="flex items-center gap-2 mb-2">
+              <h2 className="text-3xl font-semibold text-slate-800">
+                Safe Ship Moving Services
+              </h2>
 
-      {/* Review Card */}
-      
+              <CheckBadgeIcon className="w-6 h-6 text-blue-500" />
+            </div>
+
+            <p className="text-gray-800 font-medium">
+              Andrew Freedman
+              <span className="text-gray-500 font-normal ml-1">
+                (4 minutes ago)
+              </span>
+            </p>
+
+            <p className="mt-4 text-gray-700 line-clamp-2">
+              "Safe Ship Moving Services provided an excellent moving experience. They were professional, efficient, and took great care of all our belongings. The team was friendly and knowledgeable throughout the entire process. I highly recommend them for any moving needs!"
+              <button className="font-semibold ml-2 text-black">
+                Read More
+              </button>
+            </p>
+
+
+            <div className="flex justify-between items-center mt-6 flex-wrap gap-3">
+              <div className="flex items-center gap-2">
+                <MapPinIcon className="w-5 h-5 text-sky-700" />
+                <span>Chicago, IL</span>
+              </div>
+
+              <span className="text-gray-800">
+                USDOT No: 1234567
+              </span>
+            </div>
+          </div>
+
+          <div className="flex flex-col items-center justify-center min-w-[220px]">
+            <img
+              src="https://mymovingjourney.com/mover/hercules-moving-solutions-inc"
+              alt="Hercules Moving Solutions Inc"
+              className="h-24 object-contain mb-4"
+            />
+
+            <RatingStars rating={4.5} />
+
+            <p className="mt-3 text-3xl font-bold text-sky-800">
+              {rating}
+              <span className="text-lg font-normal ml-2">
+                ({totalReviews} reviews)
+              </span>
+            </p>
+          </div>
+        </div>
+        <hr className="w-[45%] opacity-15 mx-auto my-5 bg-current border-0 h-px mt-0" />
+
+        <OutlinedButton text={"See All Movers"} />
+
+      </div> */}
     </section>
   );
 }
