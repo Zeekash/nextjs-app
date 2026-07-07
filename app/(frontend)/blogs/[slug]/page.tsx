@@ -6,19 +6,19 @@ import MovingCalculator from "@/components/frontend/MovingCalculator";
 import { getPost } from "@/server/blogs";
 import Faqs from "@/components/frontend/Faqs";
 
+
+
+
 const BlogPage = async ({ params }: any) => {
   const { slug } = await params;
 
   const data = await getPost(slug);
-console.log("data", data);
-
   const post = data.post;
-   
+    
   const category = data.categories?.find(
     (item: any) => item.id === post.post_category_id
   );
   const faqs= data.faqs;
-
   const breadcrumbs = [
     {
       label: "Home",
@@ -26,7 +26,7 @@ console.log("data", data);
     },
     {
       label: "Blogs",
-      href: "/blog",
+      href: "/blogs",
     },
     {
       label: category?.name || "Blog",
@@ -48,6 +48,8 @@ console.log("data", data);
 
   const editedImage =
     post.edited_by?.image || null;
+
+
 
   const publishedDate = post.published_at
     ? new Date(post.published_at).toLocaleDateString("en-US", {
@@ -142,8 +144,14 @@ console.log("data", data);
     here the html 
   </section>
 
+
+  <section>
+      <MovingCalculator />
+  </section>
+
   <section>
    <Faqs
+  
   faqs={faqs}
   questionBgColor="#006b9f "
   textColor="#ffffff"

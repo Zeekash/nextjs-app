@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 const Faqs = ({
+  heading = "Frequently Asked Questions (FAQs)",
   faqs,
   questionBgColor = "#ffffff",
   textColor = "#000000",
@@ -12,23 +13,23 @@ const Faqs = ({
   const faqList = Array.isArray(faqs) ? faqs : [];
 
   return (
-    <section className="bg-white py-16">
+    <section className="bg-white py-16 w-[60vw] sm:w-[90vw] max-sm:w-[90vw]">
       <div className="mx-auto max-w-6xl px-4">
-        <h2 className="mb-10 font-serif text-[42px] font-bold text-[#081C33] md:text-[56px] sm:text-[48px] max-sm:text-[30px]">
-          Frequently Asked Questions
+        <h2 className="mb-10 font-serif text-[35px] font-bold text-[#081C33] md:text-[30px] sm:text-[24px] max-sm:text-[25px]">
+          {heading}
         </h2>
 
         <div className="space-y-5">
           {faqList.map((faq: any, index: number) => (
             <div
               key={faq.id || index}
-              className="overflow-hidden rounded-xl border border-[#C7D7E4] bg-white"
+              className="overflow-hidden w- rounded-xl border border-[#C7D7E4] bg-white"
             >
               <button
                 type="button"
                 onClick={() => setOpen(open === index ? -1 : index)}
                 style={{ backgroundColor: questionBgColor }}
-                className="flex w-full items-center justify-between px-6 py-6 text-left"
+                className="flex w-full items-center justify-between px-6 py-3 text-left"
               >
                <h3
                 style={{ color: textColor }}
@@ -42,7 +43,7 @@ const Faqs = ({
                     open === index ? "rotate-180" : ""
                   }`}
                   fill="none"
-                  stroke="currentColor"
+                  stroke={textColor} 
                   strokeWidth="2.5"
                   viewBox="0 0 24 24"
                 >
@@ -62,7 +63,7 @@ const Faqs = ({
                 }`}
               >
                 <div className="overflow-hidden">
-                  <div className="border-t border-[#C7D7E4] bg-white px-6 py-6">
+                  <div className="border-t border-[#C7D7E4] bg-white px-6 py-3">
                     <p className="text-[18px] leading-9 text-[#374151]">
                       {faq.answer}
                     </p>
