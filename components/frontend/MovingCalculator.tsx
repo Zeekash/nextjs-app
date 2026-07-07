@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 export default function MovingCalculator({
-    bgColor = "#ffffff",
+    bgColor = "#FFFFFF",
 }) {
     const [from, setFrom] = useState("");
     const [to, setTo] = useState("");
@@ -24,10 +24,12 @@ export default function MovingCalculator({
                 </span>
             </div>
 
-            <div className="bg-[#e2eefd] rounded-2xl lg:rounded-full p-3 flex flex-col lg:flex-row gap-4 items-stretch lg:justify-between lg:items-center">
+            <div className="bg-[#E2EEFD] rounded-2xl lg:rounded-full p-3 flex flex-col lg:flex-row gap-4 items-stretch lg:justify-between lg:items-center">
                 {/* Moving From */}
 
-            
+
+
+
 
                     <div className="flex-1  bg-white rounded-xl lg:rounded-full px-4 md:px-4 py-2">
                         <label className="block text-sm md:text-lg font-semibold">
@@ -57,7 +59,7 @@ export default function MovingCalculator({
                             className="w-full outline-none text-base md:text-lg bg-transparent placeholder:text-gray-500"
                         />
                     </div>
-                
+
                 {/* Button */}
                 <button
                     className="bg-[#116087]  flex[0.9] text-white text-[22px] font-light cursor-pointer px-6 py-5 rounded-full border border-transparent hover:bg-white hover:text-black hover:border-[#116087] transition-all duration-300 w-full lg:w-auto"

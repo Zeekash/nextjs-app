@@ -1,5 +1,9 @@
 "use client";
-import React, { useState } from "react";
+
+import {
+  FormEvent,
+  useState,
+} from "react";
 import { RxMagnifyingGlass } from "react-icons/rx";
 
 type SearchBarProps = {
@@ -13,27 +17,37 @@ const BlogSearchBar = ({
 }: SearchBarProps) => {
   const [value, setValue] = useState("");
 
-  const handleSearch = () => {
-    onSearch?.(value);
+  const handleSubmit = (
+    event: FormEvent<HTMLFormElement>
+  ) => {
+    event.preventDefault();
+    onSearch?.(value.trim());
   };
 
   return (
-    <div className="flex w-full overflow-hidden rounded-full border border-gray-300 bg-white">
+    <form
+      onSubmit={handleSubmit}
+      className="flex w-full overflow-hidden rounded-full bg-white shadow-md ring-1 ring-gray-100"
+    >
       <input
-        type="text"
+        type="search"
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(event) =>
+          setValue(event.target.value)
+        }
         placeholder={placeholder}
-        className="w-full px-4 py-3 text-sm outline-none"
+        aria-label={placeholder}
+        className="min-w-0 flex-1 bg-transparent px-5 py-3 text-sm text-slate-900 outline-none placeholder:text-gray-500"
       />
 
       <button
-        onClick={handleSearch}
-        className="flex items-center justify-center bg-sky-800 px-4 text-white hover:bg-sky-900"
+        type="submit"
+        aria-label="Search blogs"
+        className="flex w-14 shrink-0 items-center justify-center bg-sky-800 text-xl text-white transition-colors hover:bg-sky-900"
       >
         <RxMagnifyingGlass />
       </button>
-    </div>
+    </form>
   );
 };
 
