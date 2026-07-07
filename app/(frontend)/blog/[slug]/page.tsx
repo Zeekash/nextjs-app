@@ -1,63 +1,157 @@
-import { getFaqs } from "@/server/faqs";
+import Image from "next/image";
+import { FaUser } from "react-icons/fa6";
 
-type Props = {
-  params: Promise<{
-    slug: string;
-  }>;
-};
+import Breadcrumbs from "@/components/frontend/BreadCrumbs";
+import MovingCalculator from "@/components/frontend/MovingCalculator";
+import { getPost } from "@/server/blogs";
+import Faqs from "@/components/frontend/Faqs";
 
-export default async function BlogPage({ params }: Props) {
+const BlogPage = async ({ params }: any) => {
   const { slug } = await params;
 
-  const [faqs, postRes] = await Promise.all([
-    getFaqs(),
-    fetch(`${process.env.APP_URL}/blogs/${slug}`, {
-      cache: "no-store",
-    }),
-  ]);
+  const data = await getPost(slug);
+console.log("data", data);
 
-  const json = await postRes.json();
-  const post = json.data.post;
+  const post = data.post;
+   
+  const category = data.categories?.find(
+    (item: any) => item.id === post.post_category_id
+  );
+  const faqs= data.faqs;
+
+  const breadcrumbs = [
+    {
+      label: "Home",
+      href: "/",
+    },
+    {
+      label: "Blogs",
+      href: "/blog",
+    },
+    {
+      label: category?.name || "Blog",
+      href: category ? `/category/${category.slug}` : "/blogs",
+    },
+    {
+      label: post.title || "Blog Post",
+    },
+  ];
+
+  const publishedName =
+    post.published_by?.name || post.admin?.name || "Admin";
+
+  const publishedImage =
+    post.published_by?.image || post.admin?.image || null;
+
+  const editedName =
+    post.edited_by?.name || "My Moving Journey";
+
+  const editedImage =
+    post.edited_by?.image || null;
+
+  const publishedDate = post.published_at
+    ? new Date(post.published_at).toLocaleDateString("en-US", {
+        month: "short",
+        day: "2-digit",
+        year: "numeric",
+      })
+    : "Not available";
+
+  const updatedDate = post.updated_at
+    ? new Date(post.updated_at).toLocaleDateString("en-US", {
+        month: "short",
+        day: "2-digit",
+        year: "numeric",
+      })
+    : "Not available";
 
   return (
-    <div className="max-w-3xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-4">
-        {post.title}
-      </h1>
+  <main className="flex flex-col w-full justify-center items-center bg-white px-3 pb-4 pt-[110px] sm:px-4">
+  <section className="lg:mt-[10px] flex w-full max-w-[1070px] flex-col items-start rounded-[10px] bg-[#eaf8fd] px-4 pb-4 pt-8 sm:px-5 sm:pt-10 lg:px-6">
+    <Breadcrumbs items={breadcrumbs} />
 
-      <div
-        className="prose max-w-none"
-        dangerouslySetInnerHTML={{ __html: post.body }}
-      />
+    <h1 className="mt-[14px] w-full text-left font-serif text-[30px] font-bold leading-[1.08] tracking-[-0.7px] text-black sm:text-[36px] lg:text-[42px]">
+      {post.title || "Blog Post"}
+    </h1>
 
-      {faqs?.length > 0 && (
-        <section className="mt-12">
-          <h2 className="text-4xl font-bold mb-6">
-            Frequently Asked Questions (FAQs)
-          </h2>
+    <div className="mt-6 flex w-full flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-0">
+      {/* Published By */}
+      <div className="flex items-center">
+        <div className="relative flex size-[27px] shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#247da5] text-white">
+          {publishedImage ? (
+            <Image
+              src={publishedImage}
+              alt={publishedName || "Published by"}
+              fill
+              sizes="27px"
+              className="object-cover"
+            />
+          ) : (
+            <FaUser className="text-[15px]" />
+          )}
+        </div>
 
-          <div className="space-y-4">
-            {faqs.map((faq: any) => (
-              <details
-                key={faq.id}
-                className="group overflow-hidden rounded-lg"
-              >
-                <summary className="flex cursor-pointer list-none items-center justify-between rounded-lg bg-[#006d9f] px-6 py-5 text-xl font-semibold text-white sm:text-xl">
-                  <span>{faq.question}</span>
+        <div className="ml-2 flex flex-col items-start">
+          <p className="flex flex-wrap items-center gap-x-1 text-[13px] leading-[16px] text-black">
+            <span className="font-bold">Published By:</span>
+            <span>{publishedName || "Admin"}</span>
+          </p>
 
-                  <span className="transition-transform duration-300 group-open:rotate-180">
-                    ▼
-                  </span>
-                </summary>
+          <p className="mt-[2px] text-[9px] leading-[12px] text-[#52646d]">
+            Published: {publishedDate || "Not available"}
+          </p>
+        </div>
+      </div>
 
-                <div className="border border-t-0 rounded-b-lg p-5">
-                  <p>{faq.answer}</p>
-                </div>
-              </details>
-            ))}
-          </div>
-        </section>
-      )}
+      {/* Edited By */}
+      <div className="flex items-center sm:ml-5 sm:border-l sm:border-[#9bb5bf] sm:pl-5">
+        <div className="relative flex size-[27px] shrink-0 items-center justify-center overflow-hidden rounded-[7px] bg-[#247da5] text-white">
+          {editedImage ? (
+            <Image
+              src={editedImage}
+              alt={editedName || "Edited by"}
+              fill
+              sizes="27px"
+              className="object-cover"
+            />
+          ) : (
+            <FaUser className="text-[15px]" />
+          )}
+        </div>
+
+        <div className="ml-2 flex flex-col items-start">
+          <p className="flex flex-wrap items-center gap-x-1 text-[13px] leading-[16px] text-black">
+            <span className="font-bold">Edited By:</span>
+            <span>{editedName || "My Moving Journey"}</span>
+          </p>
+
+          <p className="mt-[2px] text-[9px] leading-[12px] text-[#52646d]">
+            Updated: {updatedDate || "Not available"}
+          </p>
+        </div>
+      </div>
     </div>
+
+    <div className="mt-6 flex w-full min-w-0">
+      <MovingCalculator />
+    </div>
+  </section>
+
+
+  <section>
+    here the html 
+  </section>
+
+  <section>
+   <Faqs
+  faqs={faqs}
+  questionBgColor="#006b9f "
+  textColor="#ffffff"
+/>
+  </section>
+
+</main>
   );
-}
+};
+
+export default BlogPage;
