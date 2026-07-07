@@ -1,12 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import {
     registerCompany,
     getStates,
     getCitiesByState,
 } from "@/server/registration";
 import type { StateOption, CityOption } from "@/types/registration";
+
 
 const serviceOptions = [
     {
@@ -72,6 +74,8 @@ export default function RegistrationPage() {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+    const router = useRouter();
+
     useEffect(() => {
         async function loadStates() {
             setStatesLoading(true);
@@ -89,10 +93,7 @@ export default function RegistrationPage() {
         loadStates();
     }, []);
 
-    async function handleStateChange(
-        e: React.ChangeEvent<HTMLSelectElement>
-    ) {
-        const stateId = e.target.value;
+    async function handleStateChange(stateId: string) {
 
         setSelectedState(stateId);
         setSelectedCity("");
@@ -137,14 +138,18 @@ export default function RegistrationPage() {
                 return;
             }
 
-            alert(res.message || "Company registered successfully.");
+            const companyName = formData.get("company_name")?.toString() || "";
+            const params = new URLSearchParams();
 
-            form.reset();
-            setSelectedState("");
-            setSelectedCity("");
-            setCities([]);
-            setPhone("");
-            setAboutCount(0);
+            if (res.message) {
+                params.set("message", res.message);
+            }
+
+            if (companyName) {
+                params.set("company", companyName);
+            }
+
+            router.push(`/company/register/thank-you?${params.toString()}`);
         } catch (error: any) {
             alert(error?.message || "Something went wrong.");
         } finally {
@@ -176,8 +181,8 @@ export default function RegistrationPage() {
         "w-full h-[52px] rounded-md bg-[#eef5f8] px-4 text-[15px] text-gray-700 outline-none border border-gray-300 focus:border-[#126987] disabled:cursor-not-allowed disabled:opacity-70";
 
     return (
-        <main className="min-h-screen bg-[#f5f5f5] px-3 py-6">
-            <div className="mx-auto max-w-[980px] overflow-hidden rounded-[18px] bg-white shadow-lg">
+        <main className="min-h-screen  px-3 py-6">
+            <div className="mx-auto mt-16 lg:mt-22 max-w-[980px] overflow-hidden rounded-[18px] bg-white shadow-lg">
                 <div className="bg-[#126987] px-6 py-12 text-center text-white">
                     <h1 className="font-serif text-[34px] font-bold uppercase tracking-wide">
                         Company Register
@@ -398,62 +403,55 @@ export default function RegistrationPage() {
                         />
 
                         <FieldError errors={errors} name="state_id">
-                            <select
-                                required
+                            <SearchableSelect
                                 name="state_id"
                                 value={selectedState}
                                 onChange={handleStateChange}
-                                className={selectClass}
-                                disabled={statesLoading}
-                            >
-                                <option value="">
-                                    {statesLoading
+                                options={states.map((s) => ({
+                                    id: String(s.id),
+                                    label: s.name,
+                                }))}
+                                placeholder={
+                                    statesLoading
                                         ? "Loading states..."
-                                        : "-- Select State --"}
-                                </option>
-
-                                {states.map((state) => (
-                                    <option key={state.id} value={state.id}>
-                                        {state.name}
-                                    </option>
-                                ))}
-                            </select>
+                                        : "-- Select State --"
+                                }
+                                loading={statesLoading}
+                                disabled={statesLoading}
+                                selectClass={selectClass}
+                                required
+                            />
                         </FieldError>
 
                         <FieldError errors={errors} name="city_id">
-                            <select
-                                required
+                            <SearchableSelect
                                 name="city_id"
                                 value={selectedCity}
-                                onChange={(e) =>
-                                    setSelectedCity(e.target.value)
-                                }
-                                className={selectClass}
-                                disabled={!selectedState || citiesLoading}
-                            >
-                                <option value="">
-                                    {!selectedState
+                                onChange={setSelectedCity}
+                                options={cities.map((c) => {
+                                    const zip = c.zip_code
+                                        ? String(c.zip_code).padStart(5, "0")
+                                        : "";
+
+                                    return {
+                                        id: String(c.id),
+                                        label: `${c.name}${zip ? `, ${zip}` : ""}`,
+                                    };
+                                })}
+                                placeholder={
+                                    !selectedState
                                         ? "-- Select State First --"
                                         : citiesLoading
                                           ? "Loading cities..."
                                           : cities.length === 0
                                             ? "No cities found"
-                                            : "-- Select City --"}
-                                </option>
-
-                                {cities.map((city) => {
-                                    const zip = city.zip_code
-                                        ? String(city.zip_code).padStart(5, "0")
-                                        : "";
-
-                                    return (
-                                        <option key={city.id} value={city.id}>
-                                            {city.name}
-                                            {zip ? `, ${zip}` : ""}
-                                        </option>
-                                    );
-                                })}
-                            </select>
+                                            : "-- Select City --"
+                                }
+                                loading={citiesLoading}
+                                disabled={!selectedState || citiesLoading}
+                                selectClass={selectClass}
+                                required
+                            />
                         </FieldError>
                     </div>
 
@@ -535,6 +533,118 @@ function SectionTitle({ title }: { title: string }) {
             </h2>
 
             <div className="mt-3 border-t border-gray-300" />
+        </div>
+    );
+}
+
+function SearchableSelect({
+    name,
+    value,
+    onChange,
+    options,
+    placeholder,
+    loading,
+    disabled,
+    selectClass,
+    required,
+}: {
+    name?: string;
+    value: string;
+    onChange: (val: string) => void;
+    options: { id: string; label: string }[];
+    placeholder: string;
+    loading?: boolean;
+    disabled?: boolean;
+    selectClass: string;
+    required?: boolean;
+}) {
+    const [open, setOpen] = useState(false);
+    const [search, setSearch] = useState("");
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    const selectedLabel =
+        options.find((o) => o.id === value)?.label || "";
+
+    const filtered = options.filter((o) =>
+        o.label.toLowerCase().includes(search.toLowerCase())
+    );
+
+    useEffect(() => {
+        function handleClickOutside(e: MouseEvent) {
+            if (
+                containerRef.current &&
+                !containerRef.current.contains(e.target as Node)
+            ) {
+                setOpen(false);
+            }
+        }
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
+
+    useEffect(() => {
+        if (!open) {
+            setSearch("");
+        }
+    }, [open]);
+
+    return (
+        <div className="relative" ref={containerRef}>
+            <input type="hidden" name={name} value={value} required={required} />
+
+            <button
+                type="button"
+                onClick={() => !disabled && setOpen((v) => !v)}
+                className={`${selectClass} flex w-full items-center justify-between text-left ${
+                    disabled ? "cursor-not-allowed opacity-70" : ""
+                }`}
+            >
+                <span className={value ? "text-gray-700" : "text-gray-500"}>
+                    {loading ? "Loading..." : value ? selectedLabel : placeholder}
+                </span>
+                <span className="text-gray-500">▼</span>
+            </button>
+
+            {open && (
+                <div className="absolute z-20 mt-1 w-full max-h-[280px] overflow-auto rounded-md border border-gray-300 bg-white shadow-lg">
+                    <div className="sticky top-0 border-b border-gray-200 bg-white p-2">
+                        <input
+                            autoFocus
+                            type="text"
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                            placeholder="Search..."
+                            className="h-9 w-full rounded-md bg-[#eef5f8] px-3 text-sm outline-none border border-transparent focus:border-[#126987]"
+                            onClick={(e) => e.stopPropagation()}
+                        />
+                    </div>
+
+                    {filtered.map((o) => (
+                        <button
+                            key={o.id}
+                            type="button"
+                            onClick={() => {
+                                onChange(o.id);
+                                setOpen(false);
+                            }}
+                            className={`w-full px-4 py-2.5 text-left text-sm hover:bg-[#eef5f8] ${
+                                o.id === value
+                                    ? "bg-[#eef5f8] font-medium"
+                                    : ""
+                            }`}
+                        >
+                            {o.label}
+                        </button>
+                    ))}
+
+                    {filtered.length === 0 && (
+                        <div className="px-4 py-3 text-sm text-gray-500">
+                            No results found
+                        </div>
+                    )}
+                </div>
+            )}
         </div>
     );
 }
