@@ -11,6 +11,8 @@ export default async function BlogPage({ searchParams }: any) {
   const data = await getBlogMetaData(page);
 
   const blogs = data.posts.data;
+  const categories = data.categories;
+  const popularArticles = data.featured_posts;
 
   const filteredBlogs = search
     ? blogs.filter((blog: any) =>
@@ -20,22 +22,13 @@ export default async function BlogPage({ searchParams }: any) {
       )
     : blogs;
 
-  const popularArticles = blogs.slice(0, 4);
 
-  const categories = [
-    { name: "Packing Tips", count: 24 },
-    { name: "Moving Resources", count: 56 },
-    { name: "Moving Guide", count: 13 },
-    { name: "City Guide", count: 20 },
-    { name: "Storage Guide", count: 15 },
-    { name: "State Guide", count: 49 },
-  ];
 
   return (
     <>
       {/* HERO (UNCHANGED) */}
       <section
-        className="h-48 sm:h-64 lg:h-96 bg-cover bg-center relative"
+        className="h-48  max-sm:h-70 sm:h-75 lg:h-96 bg-cover bg-center relative "
         style={{
           backgroundImage:
             "url('https://images.unsplash.com/photo-1588279294076-00c6196adc27?q=80&w=1175&auto=format&fit=crop')",
@@ -62,25 +55,28 @@ export default async function BlogPage({ searchParams }: any) {
           <div className="flex flex-col gap-4 lg:flex-row">
 
             {/* MAIN */}
-            <main className="min-w-0 flex-1 space-y-6 lg:pr-12">
-
-              <div className="flex flex-wrap gap-6">
-                {filteredBlogs.map((blog: any, i: number) => (
-                  <BlogCard
-                    key={i}
-                    className="w-full sm:w-[48%]"
-                    title={blog.title}
-                    description={blog.description}
-                    image={`/storage/${blog.image}`}
-                    category="Blog"
-                    author="Admin"
-                    date=""
-                    slug={blog.slug}
-                  />
-                ))}
-              </div>
-
-            </main>
+        <main className="min-w-0 flex-1 space-y-6 lg:pr-12">
+        <div className="flex flex-wrap items-stretch gap-6">
+          {filteredBlogs.map((blog: any, i: number) => (
+            <Link
+              key={blog.slug || i}
+              href={`/blog/${blog.slug}`}
+              className="flex w-full sm:w-[48%]"
+            >
+              <BlogCard
+                className="h-full w-full"
+                title={blog.title}
+                description={blog.description}
+                image={`/storage/${blog.image}`}
+                category="Blog"
+                author="N/A"
+                date=""
+                slug={blog.slug}
+              />
+            </Link>
+          ))}
+        </div>
+      </main>
 
             {/* SIDEBAR (UNCHANGED UI) */}
             <aside className="w-full space-y-5 lg:w-80 lg:shrink-0">
@@ -110,7 +106,7 @@ export default async function BlogPage({ searchParams }: any) {
                 </div>
               </section>
 
-              <section className="rounded-2xl bg-blue-50 p-4 shadow-sm sm:p-5">
+              <section className="rounded-2xl p-4 shadow-sm sm:p-5" style={{ backgroundColor: "#e7eff1" }}>
                 <h2 className="text-lg font-semibold text-slate-900">
                   Categories
                 </h2>
@@ -121,9 +117,9 @@ export default async function BlogPage({ searchParams }: any) {
                       key={category.name}
                       className="flex items-center justify-between rounded-xl px-2 py-1 text-sm text-slate-700"
                     >
-                      <span className="font-medium">{category.name}</span>
-                      <span className="rounded-full bg-sky-800 px-2.5 py-0.5 text-xs font-semibold text-white">
-                        {category.count}
+                      <span className="font-bold" style={{color:"#051f00cc"}} >{category.name}</span>
+                      <span className="rounded-full  px-2.5 py-0.5 text-xs font-semibold text-white" style={{ backgroundColor: "#116087" }}>
+                        {category.posts_count}
                       </span>
                     </div>
                   ))}
