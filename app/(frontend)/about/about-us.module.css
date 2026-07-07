@@ -1,0 +1,459 @@
+.page {
+    --bg: #116087;
+    --family: var(--font-heading, "Google Sans", Arial, sans-serif);
+    --para-family: var(--font-body, "Google Sans", Arial, sans-serif);
+    background: #fff;
+    color: #1e1a1a;
+    margin-top: 0 !important;
+}
+
+.page strong,
+.page b {
+    font-weight: 600;
+}
+
+.page h2 {
+    font-size: 32px;
+    margin: 40px auto 20px;
+    font-weight: 600;
+    font-family: var(--family);
+}
+
+.page p {
+    font-weight: 400;
+    font-family: var(--para-family);
+    font-size: 20px;
+    line-height: 36px;
+    letter-spacing: 0.2px;
+    margin: 0 0 12px;
+}
+
+.container {
+    width: min(100% - 32px, 1140px);
+    margin: 0 auto;
+}
+
+.containerMain {
+    max-width: 1020px;
+    margin: 0 auto;
+}
+
+.hero {
+    min-height: 600px;
+    background-image: url("/assets/img/about-us/about-us.png");
+    background-size: inherit;
+    background-position: center;
+    position: relative;
+    background-color: rgba(112, 157, 216, 0.15);
+    background-repeat: no-repeat;
+}
+
+.bannerHead {
+    padding-top: 150px;
+}
+
+.heroContent {
+    max-width: 520px;
+}
+
+.bannerHead h1 {
+    font-size: 48px;
+    line-height: 1.1;
+    font-weight: 600;
+    margin: 8px 0;
+    font-family: var(--family);
+}
+
+.bannerHead p {
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1.35;
+    margin-top: 8px;
+}
+
+.focusSection {
+    padding: 20px 0;
+    background: #fff;
+}
+
+.focusSection h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.focusGrid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.focusCard {
+    background: #f7fafc;
+    border-radius: 20px;
+    padding: 20px;
+    height: 100%;
+    transition: all 0.3s ease;
+    border: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.focusIcon {
+    width: 80px;
+    height: 80px;
+    background: transparent;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0 25px;
+}
+
+.focusIcon img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+.focusCard h3 {
+    font-size: 19px;
+    font-weight: 600;
+    margin: 0 0 12px;
+    font-family: var(--family);
+}
+
+.focusCard p {
+    font-size: 18px;
+    line-height: 1.7;
+    font-weight: 400;
+    margin: 0;
+    min-height: 120px;
+}
+
+.btnComp {
+    display: block;
+    text-align: center;
+    background: #fff;
+    font-weight: 600;
+    border-radius: 999px;
+    padding: 8px 20px;
+    color: var(--bg);
+    font-size: 18px;
+    border: 2px solid var(--bg);
+    text-decoration: none;
+    margin-top: 24px;
+    transition: all 0.3s ease;
+}
+
+.btnComp:hover {
+    background: var(--bg);
+    color: #fff;
+}
+
+.faqHeading {
+    color: #1e1a1a;
+}
+
+.accordingTo {
+    font-size: 24px !important;
+    font-weight: 500 !important;
+    margin: 20px 0 12px !important;
+    font-family: var(--family) !important;
+}
+
+.trackGrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.trackCard {
+    background: #bee2ee;
+    border-radius: 10px;
+    padding: 20px;
+    height: 100%;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.trackCard h3 {
+    font-size: 26px;
+    font-weight: 600;
+    color: #1e1a1a;
+    margin: 0 0 14px;
+    font-family: var(--family);
+}
+
+.trackCard p {
+    margin-bottom: 0;
+}
+
+.locationList {
+    margin: 24px 0;
+}
+
+.locationItem {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 15px;
+    font-weight: 400;
+    font-size: 20px;
+    font-family: var(--para-family);
+    line-height: 36px;
+    letter-spacing: 0.2px;
+}
+
+.checkIcon {
+    color: var(--bg);
+    font-size: 1.2rem;
+    font-weight: 700;
+    line-height: 36px;
+    flex: 0 0 auto;
+}
+
+.rankingSection {
+    padding: 60px 20px;
+    background: var(--bg);
+    border-radius: 15px;
+    margin-top: 40px;
+}
+
+.rankingSection h2 {
+    color: #fff;
+    font-weight: 600;
+    margin-top: 0;
+}
+
+.rankingSection p {
+    color: #fff;
+}
+
+.narrowText {
+    max-width: 900px;
+}
+
+.introText {
+    font-size: 20px;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.stepSection {
+    margin-bottom: 30px;
+    border: 1px solid #00000033;
+    border-radius: 15px;
+    padding: 15px 20px;
+}
+
+.stepSubtitle {
+    color: #1e1a1a;
+    font-weight: 600;
+    font-size: 20px;
+    margin: 0 0 10px;
+    font-family: var(--family);
+}
+
+.stepContent {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 0 !important;
+}
+
+.textStart {
+    text-align: left !important;
+}
+
+.gitCard {
+    background: linear-gradient(135deg, #116087 0%, #30779b 100%);
+    border-radius: 16px;
+    padding: 30px;
+    color: #fff;
+    margin: 24px 0;
+}
+
+.gitCard h2 {
+    font-size: 28px !important;
+    font-weight: 700 !important;
+    color: #fff;
+    margin-bottom: 20px !important;
+    margin-top: 0 !important;
+    text-align: left;
+}
+
+.gitCard p {
+    font-size: 18px !important;
+    line-height: 28px !important;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 15px !important;
+}
+
+.gitSocial {
+    margin-top: 25px;
+    padding-top: 25px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.gitSocialIcons {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.gitSocialBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-family: "Google Sans", Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.facebook {
+    background-color: #1877f2;
+    color: #fff;
+}
+
+.twitter {
+    background-color: #1da1f2;
+    color: #fff;
+}
+
+.linkedin {
+    background-color: #0a66c2;
+    color: #fff;
+}
+
+.pinterest {
+    background-color: #e60023;
+    color: #fff;
+}
+
+.gitSocialBtn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 992px) {
+    .focusGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .trackGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .gitCard h2 {
+        font-size: 22px !important;
+    }
+
+    .gitCard p {
+        font-size: 16px !important;
+    }
+
+    .focusSection {
+        padding: 50px 0;
+    }
+
+    .focusSection h2 {
+        font-size: 1.8rem;
+        margin-bottom: 40px;
+    }
+
+    .focusCard {
+        padding: 35px 25px;
+        margin-bottom: 20px;
+    }
+
+    .focusCard h3 {
+        font-size: 1.4rem;
+    }
+
+    .focusCard p {
+        font-size: 0.95rem;
+    }
+
+    .rankingSection {
+        padding: 30px 20px;
+    }
+
+    .rankingSection h2 {
+        font-size: 1.6rem;
+    }
+
+    .locationItem {
+        font-size: 1rem;
+        padding: 12px 0;
+    }
+}
+
+@media (max-width: 576px) {
+    .page h2 {
+        font-size: 26px !important;
+    }
+
+    .page p {
+        font-size: 17px !important;
+        line-height: 30px !important;
+    }
+
+    .bannerHead h1 {
+        font-size: 40px;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    .bannerHead {
+        padding-top: 150px;
+        padding-bottom: 30px;
+    }
+
+    .hero {
+        min-height: auto;
+        background-size: inherit;
+        background-position: unset;
+    }
+
+    .heroContent {
+        max-width: 100%;
+    }
+
+    .bannerHead p {
+        font-size: 22px !important;
+        font-weight: 400 !important;
+        text-align: center;
+        margin: auto;
+    }
+
+    .focusGrid,
+    .trackGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .focusIcon {
+        width: 70px;
+        height: 70px;
+    }
+
+    .focusCard h3 {
+        font-size: 1.2rem;
+    }
+
+    .rankingSection h2 {
+        font-size: 1.4rem;
+    }
+
+    .gitSocialBtn {
+        width: 100%;
+        justify-content: center;
+    }
+}
