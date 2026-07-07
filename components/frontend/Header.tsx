@@ -7,6 +7,7 @@ import {
   FaChevronDown,
   FaPlus,
 } from "react-icons/fa";
+import Link from "next/link";
 import { HiOutlineBars3BottomLeft } from "react-icons/hi2";
 const resourceLinks = [
   { title: "Best Moving Container Companies" },
@@ -22,29 +23,29 @@ const movingLinks = {
   interstate: [
     {
       title: "Best Long Distance Movers",
-      icon: "https://mymovingjourney.com/assets/img/best-long-distance-hd.png",
+      icon: "/assets/img/navigation/best-long-distance-hd.webp",
       link: "#",
     },
     {
       title: "Moving Companies in USA",
-      icon: "https://mymovingjourney.com/assets/img/moving-companies-in-usa-hd.png",
+      icon: "/assets/img/navigation/moving-companies-in-usa-hd.webp",
       link: "#",
     },
     {
       title: "Popular Moving Routes",
-      icon: "https://mymovingjourney.com/assets/img/popular-moving-routes-hd.png",
+      icon: "/assets/img/navigation/popular-moving-routes-hd.webp",
       link: "#",
     },
   ],
   local: [
     {
       title: "Movers List A-Z",
-      icon: "https://mymovingjourney.com/assets/img/mover-list-hd.png",
+      icon: "/assets/img/navigation/mover-list-hd.webp",
       link: "#",
     },
     {
       title: "Best Local Moving Companies",
-      icon: "https://mymovingjourney.com/assets/img/best-local-moving-hd.png",
+      icon: "/assets/img/navigation/best-local-moving-hd.webp",
       link: "#",
     },
   ],
@@ -83,7 +84,7 @@ export default function Header() {
           {/* Logo */}
           <a href="/">
             <img
-              src="https://mymovingjourney.com/assets/img/logo.png"
+              src="/assets/img/navigation/logo.webp"
               alt="logo"
               className="h-18 object-contain"
             />
@@ -326,9 +327,9 @@ export default function Header() {
             <button className={`bg-[#116087] text-white text-[14px]  font-light cursor-pointer px-6 py-3 rounded-full border border-transparent hover:bg-[#fff] hover:text-black hover:border-[#116087] transition-all duration-300 `}>
               Write A Review
             </button>
-            <button className="w-11 h-11 border rounded-full  border-transparent bg-[#E2EEFD] flex items-center justify-center">
+            <Link href="/company/register" className="w-11 h-11 border rounded-full  border-transparent bg-[#E2EEFD] flex items-center justify-center">
               <FaPlus className="text-[#116087]" />
-            </button>
+            </Link>
           </div>
 
           {/* Mobile Toggle */}
@@ -559,9 +560,12 @@ export default function Header() {
               >
                 Write A Review
               </button>
-              <button className="w-11 h-11 border rounded-full  border-transparent bg-[#E2EEFD] flex items-center justify-center">
+              <Link
+                href="/company/register"
+                className="w-11 h-11 rounded-full bg-[#E2EEFD] flex items-center justify-center hover:bg-[#116087] transition"
+              >
                 <FaPlus className="text-[#116087]" />
-              </button>
+              </Link>
             </div>
 
           </div>
