@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useMovingCalculatorModal } from "@/components/frontend/MovingCalculatorModal";
 
 export default function MovingCalculator({
     bgColor = "#FFFFFF",
@@ -8,6 +9,7 @@ export default function MovingCalculator({
     const [from, setFrom] = useState("");
     const [to, setTo] = useState("");
     const [distance, setDistance] = useState(0);
+    const { openModal } = useMovingCalculatorModal();
 
     return (
         <div
@@ -62,6 +64,8 @@ export default function MovingCalculator({
 
                 {/* Button */}
                 <button
+                    type="button"
+                    onClick={() => openModal(from, to)}
                     className="bg-[#116087]  flex[0.9] text-white text-[22px] font-light cursor-pointer px-6 py-5 rounded-full border border-transparent hover:bg-white hover:text-black hover:border-[#116087] transition-all duration-300 w-full lg:w-auto"
                 >
                     Calculate Cost Now

@@ -10,7 +10,7 @@ export default function Footer() {
         {/* Logo Section */}
         <div>
           <img
-            src="https://mymovingjourney.com/assets/img/logo.png"
+            src="/assets/img/navigation/logo.webp"
             alt="My Moving Journey"
             className="w-52 mb-5"
           />
@@ -103,12 +103,12 @@ export default function Footer() {
           </h3>
 
           <ul className="space-y-3 text-lg">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About Us</a></li>
+           <Link href = "/"><li><a href="#">Home</a></li></Link>
+            <Link href = "/about"><li><a href="#">About Us</a></li></Link>
             <li><a href="#">Free Moving Quote</a></li>
             <li><a href="#">Moving Cost Calculator</a></li>
             <li><a href="#">Blogs</a></li>
-            <li><a href="#">Contact Us</a></li>
+             <Link href = "/contact"><li><a href="#">Contact Us</a></li></Link>
             <li><a href="#">Write A Review</a></li>
             <li><a href="#">Sitemap</a></li>
           </ul>
