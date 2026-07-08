@@ -197,7 +197,7 @@ const CategoryBlogsPage = async ({
               {posts.map((post) => (
                 <Link
                   key={post.slug}
-                  href={`/blog/${post.slug}`}
+                  href={`/blogs/${post.slug}`}
                   className="block h-full"
                 >
                   <BlogCard

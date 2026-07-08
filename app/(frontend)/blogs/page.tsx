@@ -41,7 +41,7 @@ export default async function BlogPage({ searchParams }: any) {
             <div className="flex items-center gap-2 text-sm opacity-90">
               <Link href="/">Home</Link>
               <span>➜</span>
-              <Link href="/blog">Blogs</Link>
+              <Link href="/blogs">Blogs</Link>
             </div>
             <h1 className="mt-2 text-3xl sm:text-4xl lg:text-5xl font-bold">
               Moving Blogs
@@ -60,7 +60,7 @@ export default async function BlogPage({ searchParams }: any) {
           {filteredBlogs.map((blog: any, i: number) => (
             <Link
               key={blog.slug || i}
-              href={`/blog/${blog.slug}`}
+              href={`/blogs/${blog.slug}`}
               className="flex w-full sm:w-[48%]"
             >
               <BlogCard
