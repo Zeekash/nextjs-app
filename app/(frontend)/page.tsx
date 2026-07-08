@@ -1,16 +1,18 @@
-"use client";
-
-import { useState } from "react";
 import { FaCheckCircle, FaMapMarkerAlt, FaStar, FaRegStar } from "react-icons/fa";
 import MovingCalculator from "@/components/frontend/MovingCalculator";
+import Faqs from "@/components/frontend/Faqs";
+import { getHomeData } from "@/server/home";
 
+function getCompanyImageUrl(image: string) {
+  if (!image) return "";
+  if (image.startsWith("http")) return image;
+  return `http://localhost:8000/${image}`;
+}
 
-export default function HomePage() {
-  const [from, setFrom] = useState("");
-  const [to, setTo] = useState("");
-  const [distance] = useState(0);
-  const rating = 4.5;
-  const totalReviews = 128;
+export default async function HomePage() {
+  const homeData = await getHomeData();
+  const featured = homeData.featured || [];
+
   const cards = [
     {
       title: "Verified Listings Only",
@@ -176,75 +178,92 @@ export default function HomePage() {
       {/* Trusted Movers Section */}
       <div className='mt-12 flex flex-col items-center'>
         <h3 className='urbanfont lg:text-5xl font-bold text-2xl text-center'>Find Trusted Moving Companies Near You</h3>
-        <div className="  max-w-7xl mx-auto p-5  flex flex-col lg:flex-row justify-between gap-6 ">
 
-          <div className="flex-1 bg-[#F8FAFB] rounded-[16px] border-[#11608729] p-6">
-            <div className="flex items-center gap-2 mb-2">
-              <h2 className="text-3xl font-semibold text-slate-800 urbanfont">
-                Safe Ship Moving Services
-              </h2>
+        {featured.length === 0 ? (
+          <p className="mt-6 text-gray-600">No featured companies found.</p>
+        ) : (
+          featured.map((company) => (
+            <div
+              key={company.id}
+              className="max-w-7xl mx-auto p-5 flex flex-col lg:flex-row justify-between gap-6 w-full"
+            >
+              <div className="flex-1 bg-[#F8FAFB] rounded-[16px] border-[#11608729] p-6">
+                <div className="flex items-center gap-2 mb-2">
+                  <h2 className="text-3xl font-semibold text-slate-800 urbanfont">
+                    {company.company_name}
+                  </h2>
 
-              <FaCheckCircle className="w-6 h-6 text-blue-500" />
-            </div>
+                  {company.claimed ? (
+                    <FaCheckCircle className="w-6 h-6 text-blue-500" />
+                  ) : null}
+                </div>
 
-            <p className="text-gray-800 font-medium">
-              Andrew Freedman
-              <span className="text-gray-500 font-normal ml-1">
-                (4 minutes ago)
-              </span>
-            </p>
+                <p className="text-gray-800 font-medium">
+                  {company.name || "Verified User"}
+                  {company.created_at ? (
+                    <span className="text-gray-500 font-normal ml-1">
+                      ({new Date(company.created_at).toLocaleDateString()})
+                    </span>
+                  ) : null}
+                </p>
 
-            <p className="mt-4 text-gray-700 line-clamp-2">
-              "Safe Ship Moving Services provided an excellent moving experience. They were professional, efficient, and took great care of all our belongings. The team was friendly and knowledgeable throughout the entire process. I highly recommend them for any moving needs!"
-              <button className="font-semibold ml-2 text-black">
-                Read More
-              </button>
-            </p>
+                <p className="mt-4 text-gray-700 line-clamp-2">
+                  {company.your_review
+                    ? `"${company.your_review}"`
+                    : company.subject || ""}
+                  <button className="font-semibold ml-2 text-black">
+                    Read More
+                  </button>
+                </p>
 
+                <div className="flex justify-between items-center mt-6 flex-wrap gap-3">
+                  <div className="flex items-center gap-2">
+                    <FaMapMarkerAlt className="w-5 h-5 text-sky-700" />
+                    <span>
+                      {company.city}, {company.state}
+                    </span>
+                  </div>
 
-            <div className="flex justify-between items-center mt-6 flex-wrap gap-3">
-              <div className="flex items-center gap-2">
-                <FaMapMarkerAlt className="w-5 h-5 text-sky-700" />
-                <span>Chicago, IL</span>
+                  <span className="text-gray-800">
+                    USDOT No: {company.us_dot || "N/A"}
+                  </span>
+                </div>
               </div>
 
-              <span className="text-gray-800">
-                USDOT No: 1234567
-              </span>
+              <div className="flex flex-col items-center justify-center min-w-[220px]">
+                <img
+                  src={getCompanyImageUrl(company.image)}
+                  alt={company.company_name}
+                  className="h-24 object-contain mb-4"
+                />
+
+                <div className="flex items-center gap-1 text-yellow-400">
+                  {Array.from({ length: 5 }).map((_, i) => {
+                    const filled = i < Math.floor(company.average_rating || 0);
+                    return filled ? (
+                      <FaStar key={i} className="w-5 h-5" />
+                    ) : (
+                      <FaRegStar key={i} className="w-5 h-5" />
+                    );
+                  })}
+                </div>
+
+                <p className="mt-3 text-3xl font-bold text-sky-800">
+                  {company.average_rating || 0}
+                  <span className="text-lg font-normal ml-2">
+                    ({company.total_reviews || 0} reviews)
+                  </span>
+                </p>
+              </div>
             </div>
-          </div>
+          ))
+        )}
 
-          <div className="flex flex-col items-center justify-center min-w-[220px]">
-            <img
-              src="https://mymovingjourney.com/companies/image/alma-moving.webp"
-              alt="Hercules Moving Solutions Inc"
-              className="h-24 object-contain mb-4"
-            />
-
-            <div className="flex items-center gap-1 text-yellow-400">
-              {Array.from({ length: 5 }).map((_, i) => {
-                const filled = i < Math.floor(rating);
-                return filled ? (
-                  <FaStar key={i} className="w-5 h-5" />
-                ) : (
-                  <FaRegStar key={i} className="w-5 h-5" />
-                );
-              })}
-            </div>
-
-            <p className="mt-3 text-3xl font-bold text-sky-800">
-              {rating}
-              <span className="text-lg font-normal ml-2">
-                ({totalReviews} reviews)
-              </span>
-            </p>
-          </div>
-        </div>
         <hr className="w-[45%] opacity-15 mx-auto my-5 bg-current border-0 h-px mt-0" />
 
-        <button className={`bg-[#116087] text-white text-[14px]  font-light cursor-pointer px-6 py-3 rounded-full border border-transparent hover:bg-[#fff] hover:text-black hover:border-[#116087] transition-all duration-300 `}>   See All Movers
+        <button className={`bg-[#116087] text-white text-[14px] font-light cursor-pointer px-6 py-3 rounded-full border border-transparent hover:bg-white hover:text-black hover:border-[#116087] transition-all duration-300`}>
+          See All Movers
         </button>
-
       </div>
 
       {/* Verified Movers Section */}
@@ -615,7 +634,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-   
+            <Faqs />
    
     </>
   );

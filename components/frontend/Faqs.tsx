@@ -5,7 +5,7 @@ import { useState } from "react";
 const Faqs = ({
   heading = "Frequently Asked Questions (FAQs)",
   faqs,
-  questionBgColor = "#ffffff",
+  questionBgColor = "#FFFFFF",
   textColor = "#000000",
 }: any) => {
   const [open, setOpen] = useState(-1);
@@ -43,7 +43,7 @@ const Faqs = ({
                     open === index ? "rotate-180" : ""
                   }`}
                   fill="none"
-                  stroke={textColor} 
+                  stroke={textColor}
                   strokeWidth="2.5"
                   viewBox="0 0 24 24"
                 >
