@@ -1,9 +1,21 @@
 export interface Featured {
   id: number;
   company_name: string;
+  slug: string;
+  image: string;
+  us_dot: string;
+  claimed: number;
   city: string;
   state: string;
+  cost: string;
   average_rating: number;
+  total_reviews: number;
+  sum_overall_rating: number;
+  max_id: number;
+  name?: string;
+  created_at?: string;
+  your_review?: string;
+  subject?: string;
 }
 
 export interface Company {
