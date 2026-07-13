@@ -1,4 +1,4 @@
-import type { CompanyShowApiResponse } from "@/types/company";
+import type { CompanyShowApiResponse,CompaniesResponse } from "@/types/company";
 
 export type CompanyShowQuery = {
     sort?: string;
@@ -116,4 +116,55 @@ export async function getCompanyShow(
     }
 
     return data as CompanyShowApiResponse;
+}
+
+  const baseUrl =
+    process.env.NEXT_PUBLIC_APP_URL || "http://localhost:8000/api";
+
+
+export async function getAllCompanies(): Promise<CompaniesResponse> {
+  const response = await fetch(`${baseUrl}/company/search`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+    },
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch all companies");
+  }
+
+  const result = await response.json();
+
+  return result;
+}
+
+/**
+ * Search companies by company name
+ * API: /api/company/search/{companyName}
+ */
+export async function searchCompanies(
+  companyName: string
+): Promise<CompaniesResponse> {
+
+   const encodedCompanyName = encodeURIComponent(companyName.trim());
+  const response = await fetch(
+    `${baseUrl}/company/search?search=${encodedCompanyName}`,
+    {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
+      cache: "no-store",
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to search companies");
+  }
+
+  const result = await response.json();
+  return result
+ 
 }

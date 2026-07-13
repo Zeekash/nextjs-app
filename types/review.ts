@@ -1,0 +1,22 @@
+export type ReviewFormData = {
+  company_id: string;
+  name: string;
+  email: string;
+  overall_rating: number;
+  review_subject: string;
+  your_review: string;
+  service_cost: string;
+  currency: string;
+  move_type: string;
+  move_size: string;
+  quote: string;
+  pick_up_country_id: string;
+  pick_up_state_id: string;
+  pick_up_city_id: string;
+  delivery_country_id: string;
+  delivery_state_id: string;
+  delivery_city_id: string;
+  image1: File | null;
+  image2: File | null;
+  image3: File | null;
+};
