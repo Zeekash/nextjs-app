@@ -1,7 +1,13 @@
-import { FaCheckCircle, FaMapMarkerAlt, FaStar, FaRegStar } from "react-icons/fa";
+import Image from "next/image";
+import { FaCheckCircle, FaMapMarkerAlt } from "react-icons/fa";
 import MovingCalculator from "@/components/frontend/MovingCalculator";
 import Faqs from "@/components/frontend/Faqs";
+import BlogSlider from "@/components/frontend/BlogSlider";
+import StarRating from "@/components/frontend/StarRating";
 import { getHomeData } from "@/server/home";
+import { getBlogMetaData } from "@/server/blogs";
+import type { Blog } from "@/types/blogs";
+import Link from "next/link";
 
 function getCompanyImageUrl(image: string) {
   if (!image) return "";
@@ -12,6 +18,43 @@ function getCompanyImageUrl(image: string) {
 export default async function HomePage() {
   const homeData = await getHomeData();
   const featured = homeData.featured || [];
+  const states = homeData.states || homeData.topStates || [];
+
+  let blogs: Blog[] = [];
+  try {
+    const blogData = await getBlogMetaData(1);
+    blogs = blogData?.posts?.data || [];
+  } catch (err) {
+    console.error("Failed to load blogs:", err);
+  }
+
+
+  const faqs= [
+      {
+        "id": 1,
+        "post_id": 11,
+        "question": "yggygg",
+        "answer": "gygybybybygygyg",
+        "created_at": "2026-07-09T11:34:40.000000Z",
+        "updated_at": "2026-07-09T11:34:40.000000Z"
+      },
+      {
+        "id": 2,
+        "post_id": 11,
+        "question": "ygygyugyugu",
+        "answer": "ygugyugyuygugyuygu",
+        "created_at": "2026-07-09T11:34:40.000000Z",
+        "updated_at": "2026-07-09T11:34:40.000000Z"
+      },
+      {
+        "id": 3,
+        "post_id": 11,
+        "question": "yugyugyugyu",
+        "answer": "uyguygugyugyugyuy",
+        "created_at": "2026-07-09T11:34:40.000000Z",
+        "updated_at": "2026-07-09T11:34:40.000000Z"
+      }
+    ]
 
   const cards = [
     {
@@ -33,80 +76,36 @@ export default async function HomePage() {
       bg: "bg-[#00000008]",
     },
   ];
-  const states = [
-    {
-      id: 166,
-      name: "Florida",
-      image: "/assets/img/home/florida.webp",
-    },
-    {
-      id: 48,
-      name: "California",
-      image: "/assets/img/home/california.webp",
-    },
-    {
-      id: 35,
-      name: "New-jersey",
-      image: "/assets/img/home/new-jersey.webp",
-    },
-    {
-      id: 28,
-      name: "Texas",
-      image: "/assets/img/home/texas.webp",
-    },
-    {
-      id: 24,
-      name: "New-york",
-      image: "/assets/img/home/new-york.webp",
-    },
-    {
-      id: 19,
-      name: "Maryland",
-      image: "/assets/img/home/maryland.webp",
-    },
-    {
-      id: 17,
-      name: "Illinois",
-      image: "/assets/img/home/illinois.webp",
-    },
-    {
-      id: 15,
-      name: "Virginia",
-      image: "/assets/img/home/virginia.webp",
-    },
-    {
-      id: 13,
-      name: "North-carolina",
-      image: "/assets/img/home/north-carolina.webp",
-    },
-    {
-      id: 12,
-      name: "Washington",
-      image: "/assets/img/home/washington.webp",
-    },
-    {
-      id: 9,
-      name: "Tennessee",
-      image: "/assets/img/home/tennessee.webp",
-    },
-    {
-      id: 7,
-      name: "Massachusetts",
-      image: "/assets/img/home/massachusetts.webp",
-    },
-  ];
   const steps = [
     {
-      id: 1,
-      title: "Go to the movers list page",
+      number: 1,
+      title: (
+        <>
+          Go to the movers list
+          <br />
+          page
+        </>
+      ),
     },
     {
-      id: 2,
-      title: "Search the moving company you used",
+      number: 2,
+      title: (
+        <>
+          Search the moving company
+          <br />
+          you used
+        </>
+      ),
     },
     {
-      id: 3,
-      title: "Share your honest experience",
+      number: 3,
+      title: (
+        <>
+          Share your honest
+          <br />
+          experience
+        </>
+      ),
     },
   ];
   const focusItems = [
@@ -149,7 +148,7 @@ export default async function HomePage() {
     "Service Areas and Routes",
     "User Satisfaction",
   ];
-  
+
 
   return (
     <>
@@ -160,27 +159,27 @@ export default async function HomePage() {
         <div className="relative container mx-auto mt-22 md:mt-10 px-4 flex flex-col items-center pt-8 pb-8 md:pb-0">
 
           <div className="max-w-5xl text-center mb-6 md:mb-12">
-            <h1 className="text-[24px] sm:text-[28px] md:text-[48px] urbanfont font-extrabold leading-tight text-[#231f20]">
+            <h1 className="text-[26px] md:text-[48px] urbanfont font-extrabold leading-tight text-[#231f20]">
               Moving Soon? Let&apos;s Make It Surprisingly Simple
             </h1>
 
-            <p className="mt-4 md:mt-6 text-base sm:text-lg md:text-[22px] text-[#2f2f2f] max-w-3xl mx-auto">
+            <p className="mt-4 md:mt-6 text-[14px] md:text-[16px] leading-7 text-[#2f2f2f] max-w-3xl mx-auto">
               Skip the endless searching. Compare verified movers, get quotes fast,
               and move with total confidence.
             </p>
           </div>
 
-            <MovingCalculator bgColor="#ffffff" />
+          <MovingCalculator bgColor="#ffffff" />
         </div>
 
       </section>
 
       {/* Trusted Movers Section */}
       <div className='mt-12 flex flex-col items-center'>
-        <h3 className='urbanfont lg:text-5xl font-bold text-2xl text-center'>Find Trusted Moving Companies Near You</h3>
+        <h2 className='urbanfont text-[26px] md:text-[36px] font-bold text-center'>Find Trusted Moving Companies Near You</h2>
 
         {featured.length === 0 ? (
-          <p className="mt-6 text-gray-600">No featured companies found.</p>
+          <p className="mt-6 text-[14px] md:text-[16px] text-gray-600">No featured companies found.</p>
         ) : (
           featured.map((company) => (
             <div
@@ -189,16 +188,16 @@ export default async function HomePage() {
             >
               <div className="flex-1 bg-[#F8FAFB] rounded-[16px] border-[#11608729] p-6">
                 <div className="flex items-center gap-2 mb-2">
-                  <h2 className="text-3xl font-semibold text-slate-800 urbanfont">
+                  <h3 className="text-[22px] md:text-[26px] font-semibold text-slate-800 urbanfont">
                     {company.company_name}
-                  </h2>
+                  </h3>
 
                   {company.claimed ? (
                     <FaCheckCircle className="w-6 h-6 text-blue-500" />
                   ) : null}
                 </div>
 
-                <p className="text-gray-800 font-medium">
+                <p className="text-[14px] md:text-[16px] text-gray-800 font-medium">
                   {company.name || "Verified User"}
                   {company.created_at ? (
                     <span className="text-gray-500 font-normal ml-1">
@@ -207,7 +206,7 @@ export default async function HomePage() {
                   ) : null}
                 </p>
 
-                <p className="mt-4 text-gray-700 line-clamp-2">
+                <p className="mt-4 text-[14px] md:text-[16px] text-gray-700 line-clamp-2 leading-7">
                   {company.your_review
                     ? `"${company.your_review}"`
                     : company.subject || ""}
@@ -231,26 +230,20 @@ export default async function HomePage() {
               </div>
 
               <div className="flex flex-col items-center justify-center min-w-[220px]">
-                <img
+                <Image
                   src={getCompanyImageUrl(company.image)}
                   alt={company.company_name}
-                  className="h-24 object-contain mb-4"
+                  width={120}
+                  height={96}
+                  unoptimized
+                  className="object-contain mb-4"
                 />
 
-                <div className="flex items-center gap-1 text-yellow-400">
-                  {Array.from({ length: 5 }).map((_, i) => {
-                    const filled = i < Math.floor(company.average_rating || 0);
-                    return filled ? (
-                      <FaStar key={i} className="w-5 h-5" />
-                    ) : (
-                      <FaRegStar key={i} className="w-5 h-5" />
-                    );
-                  })}
-                </div>
+                <StarRating rating={company.average_rating || 0} />
 
-                <p className="mt-3 text-3xl font-bold text-sky-800">
+                <p className="mt-3 text-[24px] md:text-[28px] font-bold text-sky-800">
                   {company.average_rating || 0}
-                  <span className="text-lg font-normal ml-2">
+                  <span className="text-[14px] md:text-[16px] font-normal ml-2">
                     ({company.total_reviews || 0} reviews)
                   </span>
                 </p>
@@ -260,21 +253,22 @@ export default async function HomePage() {
         )}
 
         <hr className="w-[45%] opacity-15 mx-auto my-5 bg-current border-0 h-px mt-0" />
-
+        <Link href="/mover-list"> 
         <button className={`bg-[#116087] text-white text-[14px] font-light cursor-pointer px-6 py-3 rounded-full border border-transparent hover:bg-white hover:text-black hover:border-[#116087] transition-all duration-300`}>
           See All Movers
         </button>
+        </Link>
       </div>
 
       {/* Verified Movers Section */}
       <section className="w-full bg-[#f8f8f8] mt-6 py-20 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-4xl mx-auto">
-            <h2 className="text-3xl urbanfont md:text-4xl font-bold text-[#111827] leading-tight">
+            <h2 className="text-[26px] md:text-[36px] urbanfont font-bold text-[#111827] leading-tight">
               How Do You Know These Movers Are Real?
             </h2>
 
-            <p className="mt-5 text-lg text-gray-700 leading-relaxed">
+            <p className="mt-5 text-[14px] md:text-[16px] text-gray-700 leading-7">
               Every mover you see here has been{" "}
               <span className="font-semibold">
                 checked, verified, and confirmed
@@ -291,11 +285,11 @@ export default async function HomePage() {
                 key={index}
                 className={`${card.bg} rounded-2xl p-4 pb-8  h-auto`}
               >
-                <h3 className="text-2xl  text-black urbanfont leading-snug">
+                <h3 className="text-[20px] md:text-[22px] font-semibold text-black urbanfont leading-snug">
                   {card.title}
                 </h3>
 
-                <p className="mt-4 text-gray-800 text-lg leading-7">
+                <p className="mt-4 text-[14px] md:text-[16px] text-gray-800 leading-7">
                   {card.description}
                 </p>
               </div>
@@ -309,29 +303,31 @@ export default async function HomePage() {
       <section className="bg-[#f8f8f8]   py-16">
         <div className="mx-auto  max-w-6xl flex flex-col items-center gap-6 px-4">
 
-          <h2 className="mb-12 text-center text-3xl font-bold text-[#1a1a1a] md:text-5xl urbanfont">
+          <h2 className="mb-12 text-center text-[26px] md:text-[36px] font-bold text-[#1a1a1a] urbanfont">
             Top Moving States In USA
           </h2>
 
           <div className="grid items-center gap-4 grid-cols-1 md:grid-cols-3 w-full">
-            {states.map((state) => (
+            {states.map((state, index) => (
               <div
-                key={state.id}
-                className="group flex items-center gap-2 rounded-full  shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+                key={state.slug}
+                className="group flex items-center gap-2 rounded-full shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
               >
-                <div className="h-[90px] w-[95px] flex-shrink-0 overflow-hidden rounded-full">
-                  <img
-                    src={state.image}
-                    alt={state.name}
-                    className="h-full w-full object-cover"
+                <div className="h-[90px] w-[95px] shrink-0 relative overflow-hidden rounded-full">
+                  <Image
+                    src={`/assets/img/State-movers/${state.slug}.webp`}
+                    alt={state.state}
+                    fill
+                    sizes="95px"
+                    className="object-cover"
                   />
                 </div>
 
                 <div className="px-5 py-4">
                   <h3 className="text-4xl font-bold text-[#0E6BB7] leading-none urbanfont">
-                    {state.id}
+                    {index + 1}
                     <span className="ml-2 text-2xl font-semibold text-[#184A78]">
-                      {state.name}
+                      {state.state}
                     </span>
                   </h3>
 
@@ -360,7 +356,7 @@ export default async function HomePage() {
             ))}
 
           </div>
-          <button className={`bg-[#116087] text-white text-[14px]  font-light cursor-pointer px-6 py-3 rounded-full border border-transparent hover:bg-[#fff] hover:text-black hover:border-[#116087] transition-all duration-300 `}>  Explore more states
+          <button className={`bg-[#116087] text-white text-[14px] font-light cursor-pointer px-6 py-3 rounded-full border border-transparent hover:bg-white hover:text-black hover:border-[#116087] transition-all duration-300`}>  Explore more states
           </button>
         </div>
 
@@ -372,11 +368,11 @@ export default async function HomePage() {
       <section className=" py-20">
         <div className="container mx-auto px-5">
           <div className="max-w-3xl mx-auto text-center">
-            <h2 className="urbanfont text-4xl lg:text-5xl font-bold text-[#1D1D1D]">
+            <h2 className="urbanfont text-[26px] md:text-[36px] font-bold text-[#1D1D1D]">
               How You Can Share Your Review
             </h2>
 
-            <p className="mt-6 text-lg text-gray-600 leading-8">
+            <p className="mt-6 text-[14px] md:text-[16px] text-gray-600 leading-7">
               Real stories from real moves help others find{" "}
               <span className="font-semibold text-black">
                 trusted movers in USA
@@ -388,46 +384,53 @@ export default async function HomePage() {
 
           <div className="relative mt-20">
 
-            <div
-              className="hidden lg:block absolute top-10 left-[16%] right-[16%] h-[2px]"
-              style={{
-                background:
-                  "linear-gradient(to right,#0B6A99 50%,transparent 50%)",
-                backgroundSize: "10px 2px",
-              }}
-            />
-
-            <div className="flex flex-col lg:flex-row justify-between items-center gap-16 lg:gap-0">
+            <div className="hidden max-w-[900px] mx-auto md:grid md:grid-cols-[auto_1fr_auto_1fr_auto] md:items-start items-center md:gap-x-0">
               {steps.map((step, index) => (
-                <div
-                  key={step.id}
-                  className="relative flex flex-col items-center w-full"
-                >
-                  {index !== steps.length - 1 && (
-                    <div
-                      className="lg:hidden absolute top-[82px] left-1/2 -translate-x-1/2 w-[2px] h-24"
-                      style={{
-                        background:
-                          "linear-gradient(to bottom,#0B6A99 50%,transparent 50%)",
-                        backgroundSize: "2px 10px",
-                      }}
-                    />
-                  )}
-
-                  <div className="relative  w-20 h-20 rounded-full border-2 border-[#0B6A99]  flex items-center justify-center">
-                    <span className="text-4xl font-bold">{step.id}</span>
+                <div key={`step-${step.number}`} className="contents ">
+                  <div className="flex flex-col items-center">
+                    <div className="flex h-16 w-16 items-center justify-center rounded-full border-2  border-[#0B6285] bg-white text-3xl font-bold text-[#3B3B3B]">
+                      {step.number} 
+                    </div>
+                    <h3 className="mt-5 max-w-[250px] text-center text-[14px] md:text-[16px] font-semibold leading-[28px] text-[#1F1F1F]">
+                      {step.title}
+                    </h3>
                   </div>
 
-                  <h3 className="mt-6 text-center max-w-[220px] text-2xl leading-9 urbanfont">
+                  {index !== steps.length - 1 && (
+                    <div className="relative flex items-center justify-center">
+                      <div className="h-[2px] w-full md:mt-10 border-t-2 border-dashed border-[#0B6285]" />
+                      <span className="absolute left-0 md:mt-[20px] top-1/2 h-[10px] w-[10px] -translate-y-1/2 rounded-full bg-[#0B6285]" />
+                      <span className="absolute right-0 md:mt-[20px] top-1/2 h-[10px] w-[10px] -translate-y-1/2 rounded-full bg-[#0B6285]" />
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* Mobile Steps */}
+            <div className="flex flex-col items-center md:hidden">
+              {steps.map((step, index) => (
+                <div key={`mobile-${step.number}`} className="flex flex-col items-center">
+                  <div className="flex h-16 w-16 items-center justify-center rounded-full border-2 border-[#0B6285] bg-white text-3xl font-bold text-[#3B3B3B]">
+                    {step.number}
+                  </div>
+                  <h3 className="mt-4 max-w-[220px] text-center text-[18px] font-semibold leading-[28px] text-[#1F1F1F]">
                     {step.title}
                   </h3>
+
+                  {index !== steps.length - 1 && (
+                    <div className="relative my-3 h-12 border-l-2 border-dashed border-[#0B6285]">
+                      <span className="absolute left-1/2 top-0 h-[10px] w-[10px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#0B6285]" />
+                      <span className="absolute left-1/2 bottom-0 h-[10px] w-[10px] -translate-x-1/2 translate-y-1/2 rounded-full bg-[#0B6285]" />
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
           </div>
 
           <div className="mt-20 text-center">
-            <button className={`bg-[#116087] text-white text-[14px]  font-light cursor-pointer px-6 py-3 rounded-full border border-transparent hover:bg-[#fff] hover:text-black hover:border-[#116087] transition-all duration-300 `}>  Write Your Review
+            <button className={`bg-[#116087] text-white text-[14px] font-light cursor-pointer px-6 py-3 rounded-full border border-transparent hover:bg-white hover:text-black hover:border-[#116087] transition-all duration-300`}>  Write Your Review
             </button>
           </div>
         </div>
@@ -447,7 +450,7 @@ export default async function HomePage() {
               left-8
               bg-white
               px-[10px]
-              text-[22px]
+              text-[18px] md:text-[20px]
               font-semibold
               text-[#0B6EA9]
               urbanfont
@@ -457,10 +460,12 @@ export default async function HomePage() {
               As Featured On
             </h3>
 
-            <img
+            <Image
               src="/assets/img/home/brand_logos.webp"
               alt="Brand Logos"
-              className="w-full block"
+              width={920}
+              height={120}
+              className="w-full h-auto block"
             />
 
           </div>
@@ -471,7 +476,7 @@ export default async function HomePage() {
       {/* What We Focus On Section */}
       <section className=" py-16 px-5">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-center text-4xl md:text-5xl urbanfont font-bold text-[#111827] mb-14">
+          <h2 className="text-center text-[26px] md:text-[36px] urbanfont font-bold text-[#111827] mb-14">
             What We Focus On
           </h2>
 
@@ -482,14 +487,16 @@ export default async function HomePage() {
                 className="bg-[#F8FBFF] rounded-[22px] shadow-md hover:shadow-xl transition-all duration-300 p-4 flex flex-col h-full"
               >
                 <div className="w-20 h-20 rounded-full flex items-center justify-center mb-8">
-                  <img
+                  <Image
                     src={item.img}
                     alt={item.title}
-                    className=""
+                    width={80}
+                    height={80}
+                    className="object-contain"
                   />
                 </div>
 
-                <h3 className="text-[26px] md:text-[30px] urbanfont leading-[1.15] text-[#111827] mb-4">
+                <h3 className="text-[20px] md:text-[22px] font-semibold urbanfont leading-[1.15] text-[#111827] mb-4">
                   {item.title.split(" ").map((word, index) => (
                     <span key={index} className="block">
                       {word}
@@ -497,7 +504,7 @@ export default async function HomePage() {
                   ))}
                 </h3>
 
-                <p className="text-[18px] leading-9 text-[#374151] flex-grow">
+                <p className="text-[14px] md:text-[16px] leading-7 text-[#374151] flex-grow">
                   {item.desc}
                 </p>
 
@@ -518,11 +525,11 @@ export default async function HomePage() {
             background: "linear-gradient(12deg, #116087, #030303)",
           }}
         >
-          <h2 className="text-center text-white urbanfont text-[34px] md:text-[50px] font-bold leading-tight">
+          <h2 className="text-center text-white urbanfont text-[26px] md:text-[36px] font-bold leading-tight">
             How We Rank Movers
           </h2>
 
-          <p className="text-center text-white text-[18px] md:text-[20px] max-w-[760px] mx-auto mt-6 leading-relaxed">
+          <p className="text-center text-white text-[14px] md:text-[16px] max-w-[760px] mx-auto mt-6 leading-7">
             These are our criteria — focus on them, as your ranking will depend on
             these points.
           </p>
@@ -533,7 +540,7 @@ export default async function HomePage() {
                 key={index}
                 className="flex items-center gap-4 w-full max-w-[310px]"
               >
-                <div className="w-8 h-8 rounded-full border border-white flex items-center justify-center flex-shrink-0">
+                <div className="w-8 h-8 rounded-full border border-white flex items-center justify-center shrink-0">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="w-4 h-4"
@@ -548,7 +555,7 @@ export default async function HomePage() {
                   </svg>
                 </div>
 
-                <span className="text-white text-[22px] leading-none">
+                <span className="text-white text-[16px] md:text-[18px] leading-none">
                   {item}
                 </span>
               </div>
@@ -561,13 +568,13 @@ export default async function HomePage() {
 
       {/* Why Choose Section */}
       <section className="py-16 ">
-        <div className="max-w-7xl mx-auto px-4">
+        <div className="max-w-5xl mx-auto px-4">
 
-          <h2 className="text-center urbanfont text-[#0B1C33] text-[30px] md:text-[42px] font-bold leading-tight">
+          <h2 className="text-center urbanfont text-[#0B1C33] text-[26px] md:text-[36px] font-bold leading-tight">
             Why Choose My Moving Journey?
           </h2>
 
-          <p className="max-w-6xl mx-auto mt-6 text-center text-[#1f2937] text-[18px] md:text-[20px] leading-relaxed">
+          <p className="max-w-6xl mx-auto mt-6 text-center text-[#1f2937] text-[14px] md:text-[16px] leading-7">
             You don't want another list of random names; you want something real,
             something that actually helps. My Moving Journey was built for that
             moment, when you just want things to feel clear, honest, and under
@@ -576,56 +583,56 @@ export default async function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-14">
 
-            <div className="bg-[#F1F6F8] rounded-3xl p-8 shadow-sm hover:-translate-y-2 hover:shadow-lg transition-all duration-300">
-              <h3 className="text-[32px] font-semibold text-[#111827] leading-tight urbanfont">
+            <div className="bg-[#F1F6F8] rounded-3xl p-4 shadow-sm hover:-translate-y-2 hover:shadow-lg transition-all duration-300">
+              <h3 className="text-[20px] md:text-[22px] font-semibold text-[#111827] leading-tight urbanfont">
                 Real Movers and Not Random Listings
               </h3>
 
-              <p className="mt-5 text-[#374151] text-[18px] leading-9">
+              <p className="mt-5 text-[14px] md:text-[16px] text-[#374151] leading-7">
                 Every mover here is verified, licensed, and reviewed. You only
                 see trusted movers in USA who've earned their spot.
               </p>
             </div>
 
-            <div className="bg-[#F1F6F8] rounded-3xl p-8 shadow-sm hover:-translate-y-2 hover:shadow-lg transition-all duration-300">
-              <h3 className="text-[32px] font-semibold text-[#111827] leading-tight urbanfont">
+            <div className="bg-[#F1F6F8] rounded-3xl p-4 shadow-sm hover:-translate-y-2 hover:shadow-lg transition-all duration-300">
+              <h3 className="text-[20px] md:text-[22px] font-semibold text-[#111827] leading-tight urbanfont">
                 Built Around Your Needs
               </h3>
 
-              <p className="mt-5 text-[#374151] text-[18px] leading-9">
+              <p className="mt-5 text-[14px] md:text-[16px] text-[#374151] leading-7">
                 Whether you're checking local movers near me or long distance
                 movers in USA, everything's organized for how real people search.
               </p>
             </div>
 
-            <div className="bg-[#F1F6F8] rounded-3xl p-8 shadow-sm hover:-translate-y-2 hover:shadow-lg transition-all duration-300">
-              <h3 className="text-[32px] font-semibold text-[#111827] leading-tight urbanfont">
+            <div className="bg-[#F1F6F8] rounded-3xl p-4 shadow-sm hover:-translate-y-2 hover:shadow-lg transition-all duration-300">
+              <h3 className="text-[20px] md:text-[22px] font-semibold text-[#111827] leading-tight urbanfont">
                 Clear Choices
               </h3>
 
-              <p className="mt-5 text-[#374151] text-[18px] leading-9">
+              <p className="mt-5 text-[14px] md:text-[16px] text-[#374151] leading-7">
                 Compare moving companies side by side, understand costs, and pick
                 what fits your needs. There are no hidden fees or wasted time.
               </p>
             </div>
 
-            <div className="bg-[#F1F6F8] rounded-3xl p-8 shadow-sm hover:-translate-y-2 hover:shadow-lg transition-all duration-300">
-              <h3 className="text-[32px] font-semibold text-[#111827] leading-tight urbanfont">
+            <div className="bg-[#F1F6F8] rounded-3xl p-4 shadow-sm hover:-translate-y-2 hover:shadow-lg transition-all duration-300">
+              <h3 className="text-[20px] md:text-[22px] font-semibold text-[#111827] leading-tight urbanfont">
                 Information You Can Actually Use
               </h3>
 
-              <p className="mt-5 text-[#374151] text-[18px] leading-9">
+              <p className="mt-5 text-[14px] md:text-[16px] text-[#374151] leading-7">
                 From quotes to reviews, every piece of data is there to make your
                 decision easier, not harder.
               </p>
             </div>
 
-            <div className="bg-[#F1F6F8] rounded-3xl p-8 shadow-sm hover:-translate-y-2 hover:shadow-lg transition-all duration-300">
-              <h3 className="text-[32px] font-semibold text-[#111827] leading-tight urbanfont">
+            <div className="bg-[#F1F6F8] rounded-3xl p-4 shadow-sm hover:-translate-y-2 hover:shadow-lg transition-all duration-300">
+              <h3 className="text-[20px] md:text-[22px] font-semibold text-[#111827] leading-tight urbanfont">
                 A Platform That Listens
               </h3>
 
-              <p className="mt-5 text-[#374151] text-[18px] leading-9">
+              <p className="mt-5 text-[14px] md:text-[16px] text-[#374151] leading-7">
                 We keep improving from real user experiences. Your feedback shapes
                 what stays, what goes, and what gets better.
               </p>
@@ -634,8 +641,36 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
-            <Faqs />
-   
+
+      {/* FAQ Section */}
+      <Faqs  
+        heading="Frequently Asked Questions (FAQs)"
+        faqs={faqs}
+        questionBgColor="#FFFFFF"
+        textColor="#000000"
+      />
+
+      {/* Latest Blogs Section */}
+      <section className="py-16 md:py-20 px-4 bg-[#f8f8f8]">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-[26px] md:text-[36px] font-bold text-center text-[#1a1a1a] mb-12 urbanfont">
+            Here are the latest blogs
+          </h2>
+
+          <BlogSlider
+            blogs={blogs}
+            imageBaseUrl={`${process.env.ASSET_URL || "http://localhost:8000"}/public/posts/image`}
+          />
+
+          <div className="mt-10 text-center">
+            <Link href="/blogs">
+              <button className="bg-[#116087] text-white text-[14px] font-light cursor-pointer px-8 py-3 rounded-full border border-transparent hover:bg-white hover:text-black hover:border-[#116087] transition-all duration-300">
+                See More Blogs
+              </button>
+            </Link>
+          </div>
+        </div>
+      </section>
     </>
   );
 }

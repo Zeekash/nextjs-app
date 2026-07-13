@@ -148,7 +148,7 @@ export default function MoverListClient({
     return (
         <main className={styles.page}>
             <div className={styles.containerMain}>
-                <div className={styles.container}>
+                <div className={styles.container} style={{ marginTop: '48px' }}>
                     <div className={styles.innerContainer}>
                         <nav className={styles.breadcrumbWrap} aria-label="breadcrumb">
                             <ol className={styles.breadcrumb}>

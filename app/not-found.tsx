@@ -5,7 +5,7 @@ export default function NotFound() {
   return (
   <div className="flex h-[100vh] w-[100vw] flex-col items-center justify-center">
   <Image
-    src="/404.webp"
+    src="/assets/img/errors/404.webp"
     alt="404 - Page not found"
     width={1000}
     height={700}
