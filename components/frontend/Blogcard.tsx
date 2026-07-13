@@ -40,9 +40,9 @@ const BlogCard = ({
           {date}
         </p>
 
-        <button className="rounded-full bg-sky-800 px-5 py-2 text-sm font-semibold text-white hover:bg-sky-900">
+        <span className="inline-block rounded-full bg-sky-800 px-5 py-2 text-sm font-semibold text-white hover:bg-sky-900">
           {buttonText}
-        </button>
+        </span>
       </div>
     </div>
   );

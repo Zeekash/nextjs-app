@@ -133,3 +133,24 @@ export type CompanyShowApiResponse = {
     message?: string;
     data: CompanyShowData;
 };
+
+export type CompanyDetails = {
+  id: number;
+  label: string;
+  value: string;
+  slug: string;
+  image: string | null;
+  address: string | null;
+  website: string | null;
+  phone: string | null;
+  additional_phone: string | null;
+};
+
+export type CompaniesResponse = {
+  data: CompanyDetails[];
+  current_page: number;
+  last_page: number;
+  links?: string;
+};
+
+

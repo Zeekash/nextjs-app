@@ -103,12 +103,12 @@ export default function Footer() {
           </h3>
 
           <ul className="space-y-3 text-lg">
-           <Link href = "/"><li><a href="#">Home</a></li></Link>
-            <Link href = "/about"><li><a href="#">About Us</a></li></Link>
+            <li><Link href="/">Home</Link></li>
+            <li><Link href="/about">About Us</Link></li>
             <li><a href="#">Free Moving Quote</a></li>
             <li><a href="#">Moving Cost Calculator</a></li>
             <li><a href="#">Blogs</a></li>
-             <Link href = "/contact"><li><a href="#">Contact Us</a></li></Link>
+            <li><Link href="/contact">Contact Us</Link></li>
             <li><a href="#">Write A Review</a></li>
             <li><a href="#">Sitemap</a></li>
           </ul>

@@ -13,7 +13,7 @@ const Faqs = ({
   const faqList = Array.isArray(faqs) ? faqs : [];
 
   return (
-    <section className="bg-white py-16 w-[60vw] sm:w-[90vw] max-sm:w-[90vw]">
+
       <div className="mx-auto max-w-6xl px-4">
         <h2 className="mb-10 font-serif text-[35px] font-bold text-[#081C33] md:text-[30px] sm:text-[24px] max-sm:text-[25px]">
           {heading}
@@ -33,7 +33,7 @@ const Faqs = ({
               >
                <h3
                 style={{ color: textColor }}
-                className="font-serif text-[22px] md:text-[24px]"
+                className="font-serif text-[22px] md:text-[24px] sm:text-[20px] max-sm:text-[15px] font-semibold"
                 >
                 {faq.question}
                 </h3>
@@ -64,7 +64,7 @@ const Faqs = ({
               >
                 <div className="overflow-hidden">
                   <div className="border-t border-[#C7D7E4] bg-white px-6 py-3">
-                    <p className="text-[18px] leading-9 text-[#374151]">
+                    <p className="text-[18px] leading-9 text-[#374151] md:text-[16px] sm:text-[14px] max-sm:text-[15px]">
                       {faq.answer}
                     </p>
                   </div>
@@ -74,7 +74,7 @@ const Faqs = ({
           ))}
         </div>
       </div>
-    </section>
+  
   );
 };
 

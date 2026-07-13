@@ -43,7 +43,7 @@ const CategoryBlogsPage = async ({
 
   // Fetch first API page
   const firstPageData = await getBlogsByCategory(slug, 1);
-
+   console.log(firstPageData)
   const lastPage =
     firstPageData?.posts?.last_page ?? 1;
 
@@ -87,26 +87,7 @@ const CategoryBlogsPage = async ({
 
   const hasMorePages = currentPage < lastPage;
 
-  const getImageUrl = (image: string) => {
-    if (!image) {
-      return "/images/blog-placeholder.jpg";
-    }
-
-    if (
-      image.startsWith("http://") ||
-      image.startsWith("https://")
-    ) {
-      return image;
-    }
-
-    const imageBaseUrl =
-      process.env.BLOG_IMAGE_URL?.replace(/\/$/, "");
-
-    return imageBaseUrl
-      ? `${imageBaseUrl}/${image}`
-      : `/${image}`;
-  };
-
+ 
   const getShowMoreUrl = () => {
     return `${categoryPageUrl}?page=${
       currentPage + 1
@@ -201,7 +182,7 @@ const CategoryBlogsPage = async ({
                   className="block h-full"
                 >
                   <BlogCard
-                    image={getImageUrl(post.image)}
+                    image={`${process.env.ASSET_URL}/public/posts/image/${post.image}`}
                     category={categoryName}
                     title={post.title}
                     author="Admin"
